@@ -1,0 +1,29 @@
+<resources>
+  <string name="zkr_welcome">Zeekr CarPlay</string>
+  <string name="zkr_welcome_desc">Final Alpha 03 · Independent community build. Choose your language, connection and audio.</string>
+  <string name="zkr_transport">Choose a connection</string>
+  <string name="zkr_transport_desc">Use a USB data cable, or choose one of the three wireless modes below.</string>
+  <string name="zkr_usb">USB cable</string>
+  <string name="zkr_wireless">Wireless</string>
+  <string name="zkr_hotspot">Car hotspot (experimental)</string>
+  <string name="zkr_hotspot_desc">Compatibility depends on firmware. It did not connect in our Zeekr 001 2023 test. Enter the actual hotspot details; success is not guaranteed.</string>
+  <string name="zkr_direct">Wi-Fi Direct · Recommended</string>
+  <string name="zkr_direct_desc">Tested by the owner on a pre-facelift Chinese Zeekr 001 (2023), OS 5.6 / Android 9, iPhone with iOS 27.2. Reconnection after a head-unit restart worked. Other models are unverified.</string>
+  <string name="zkr_audio">How should audio play?</string>
+  <string name="zkr_audio_desc">Choose where iPhone audio will play. Factory Bluetooth is recommended for Zeekr 001 (2023) to keep steering-wheel music controls. Change this later in Settings: Advanced → Video and audio. Changes apply after reconnecting CarPlay.</string>
+  <string name="zkr_audio_carplay">Audio through CarPlay</string>
+  <string name="zkr_audio_carplay_desc">Sound is played by this app. Factory steering-wheel media controls and cluster metadata are not integrated on the tested Zeekr.</string>
+  <string name="zkr_audio_bt">Car Bluetooth audio · Recommended (experimental)</string>
+  <string name="zkr_audio_bt_desc">Keep the iPhone paired with the car and select Bluetooth music in the car. Music and track switching were tested on Zeekr 001 2023. Track title and artwork depend on the factory Bluetooth system. Calls, Siri and navigation need separate testing. Reconnect CarPlay to apply.</string>
+  <string name="zkr_ready">Your choices are saved. Automatic connection is optional and off on a new installation. Test while parked. You can run this guide again in Settings.</string>
+  <string name="zkr_credits">Independent community adaptation of DiPlay (shihabal3amri/DiPlay), based on xcertplay (shilapi/xcertplay). Receiver: GPL-3.0; adapted DiAuto UI: AGPL-3.0. Original notices and source are retained. Not an official Zeekr or Apple product.</string>
+  <string name="zkr_source">Original source · GitHub</string>
+  <string name="zkr_gesture_hint">Choose a gesture that does not conflict with the factory car interface.</string>
+  <string name="zkr_guide_description">Choose your language, connection and audio route for Zeekr.</string>
+  <string name="zkr_status_bar_desc">Off: keep the factory Zeekr top bar visible, including profile, battery, connectivity and clock. On: request to hide it. Applies immediately; the firmware may restrict hiding.</string>
+  <string name="zkr_navigation_bar_desc">Off: keep the factory Zeekr navigation bar visible. On: request to hide it. The climate panel is controlled by the firmware and may remain visible. Applies immediately.</string>
+  <string name="zkr_contact">Contact and project</string>
+  <string name="zkr_telegram">Telegram · @AibatK</string>
+  <string name="zkr_project_github">GitHub · Zeekr CarPlay source</string>
+  <string name="zkr_project_github_hint">The repository is currently private. An invitation from the owner is required to view it.</string>
+</resources>

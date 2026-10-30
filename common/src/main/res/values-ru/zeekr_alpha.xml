@@ -1,0 +1,29 @@
+<resources>
+  <string name="zkr_welcome">Zeekr CarPlay</string>
+  <string name="zkr_welcome_desc">Final Alpha 03 · Независимая сборка сообщества. Выберите язык, подключение и звук.</string>
+  <string name="zkr_transport">Выберите подключение</string>
+  <string name="zkr_transport_desc">Используйте USB-кабель данных или выберите один из трёх беспроводных режимов ниже.</string>
+  <string name="zkr_usb">По USB-кабелю</string>
+  <string name="zkr_wireless">Без проводов</string>
+  <string name="zkr_hotspot">Точка доступа автомобиля (экспериментально)</string>
+  <string name="zkr_hotspot_desc">Работа зависит от прошивки. В нашем тесте на Zeekr 001 2023 подключение не удалось. Укажите фактические данные точки; результат не гарантирован.</string>
+  <string name="zkr_direct">Wi-Fi Direct · Рекомендуется</string>
+  <string name="zkr_direct_desc">Проверено владельцем на китайском Zeekr 001 дорестайлинг 2023, OS 5.6 / Android 9 и iPhone с iOS 27.2. Подключение восстановилось после перезапуска головного устройства. Другие модели не проверены.</string>
+  <string name="zkr_audio">Как воспроизводить звук?</string>
+  <string name="zkr_audio_desc">Выберите, где будет воспроизводиться звук iPhone. Для Zeekr 001 2023 рекомендуем штатный Bluetooth: он сохраняет управление музыкой с руля. Изменить выбор можно в настройках: Дополнительно → Видео и звук. Изменения применяются после переподключения CarPlay.</string>
+  <string name="zkr_audio_carplay">Звук через CarPlay</string>
+  <string name="zkr_audio_carplay_desc">Звук воспроизводит приложение. На проверенном Zeekr штатные медиакнопки руля и информация о треке на приборке с этим режимом не интегрированы.</string>
+  <string name="zkr_audio_bt">Звук через Bluetooth автомобиля · Рекомендуется (экспериментально)</string>
+  <string name="zkr_audio_bt_desc">Оставьте iPhone сопряжённым с автомобилем и выберите Bluetooth-музыку в машине. Музыка и переключение треков проверены на Zeekr 001 2023. Название и обложка зависят от штатной Bluetooth-системы. Звонки, Siri и навигацию нужно проверить отдельно. Для применения переподключите CarPlay.</string>
+  <string name="zkr_ready">Выбор сохранён. Автоподключение необязательно и выключено при новой установке. Проверяйте на стоянке. Мастер можно повторить в настройках.</string>
+  <string name="zkr_credits">Независимая адаптация сообщества на основе DiPlay (shihabal3amri/DiPlay) и xcertplay (shilapi/xcertplay). Приёмник: GPL-3.0; интерфейс на основе DiAuto: AGPL-3.0. Исходники и первоначальные уведомления сохранены. Не является официальным продуктом Zeekr или Apple.</string>
+  <string name="zkr_source">Первоначальный исходный код · GitHub</string>
+  <string name="zkr_gesture_hint">Выберите жест, который не конфликтует со штатным интерфейсом автомобиля.</string>
+  <string name="zkr_guide_description">Выберите язык, подключение и маршрут звука для Zeekr.</string>
+  <string name="zkr_status_bar_desc">Выключено — верхняя штатная панель Zeekr остаётся видимой: профиль, заряд, связь и часы. Включено — приложение запрашивает её скрытие. Применяется сразу; прошивка может ограничивать скрытие.</string>
+  <string name="zkr_navigation_bar_desc">Выключено — штатная панель навигации Zeekr остаётся видимой. Включено — приложение запрашивает её скрытие. Климатическая панель управляется прошивкой и может оставаться на экране. Применяется сразу.</string>
+  <string name="zkr_contact">Связь и проект</string>
+  <string name="zkr_telegram">Telegram · @AibatK</string>
+  <string name="zkr_project_github">GitHub · Исходники Zeekr CarPlay</string>
+  <string name="zkr_project_github_hint">Пока репозиторий приватный: для просмотра нужно приглашение владельца.</string>
+</resources>
