@@ -565,6 +565,8 @@ open class CarPlayHostActivity : ComponentActivity() {
     private var microphoneAvailable = false
     private var microphonePermissionResolved = false
     private var wirelessEnabled = false
+    private var usbP2pReleaseComplete = false
+    private var usbP2pReleasePending = false
     private var mfiTarget = MfiTarget.LOCAL
     private var mfiI2cPath = AirPlayPersistence.DEFAULT_MFI_I2C_PATH
     private var remoteMfiServer = ""
@@ -868,6 +870,7 @@ open class CarPlayHostActivity : ComponentActivity() {
         MapMirrors.onChanged = mirrorsChanged
         languagePreferenceAtCreate = AppLocale.preference(this)
         if (isIphoneUsbAttachment(intent)) {
+            if (ZeekrProfile.active(this)) ZeekrWirelessMode.selectUsb(this)
             AirPlayPersistence.saveWirelessEnabled(this, false)
         }
         if (runCatching { DiPlayBootstrap.ensure(this, AirPlayPersistence.loadMfiTarget(this)) }.isFailure) {
@@ -1166,6 +1169,10 @@ open class CarPlayHostActivity : ComponentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
         if (isIphoneUsbAttachment(intent)) {
+            if (ZeekrProfile.active(this)) {
+                ZeekrWirelessMode.selectUsb(this)
+                usbP2pReleaseComplete = false
+            }
             if (wirelessEnabled) {
                 if (menuOpen) cancelSettingsEdits()
                 AirPlayPersistence.saveWirelessEnabled(this, false)
@@ -5528,6 +5535,10 @@ open class CarPlayHostActivity : ComponentActivity() {
             CarPlayBackgroundSession.clear(snapshot.controller)
             return false
         }
+        if (ZeekrProfile.active(this) && (snapshot.controller.transport == CarPlayTransport.WIRELESS) != wirelessEnabled) {
+            CarPlayBackgroundSession.stop { mainHandler.post { if (!isDestroyed) maybeStartCarPlay() } }
+            return false
+        }
         // The sink's pacing is fixed when it is built; a session from before a Smooth video change (for
         // example one whose reconnect stopped at a prerequisite) is stopped instead of adopted. Callers
         // retry, and the next start matches this view.
@@ -5622,6 +5633,28 @@ open class CarPlayHostActivity : ComponentActivity() {
     private fun startCarPlay(size: DisplaySize) {
         if (CarPlayBackgroundSession.hasSession() && !CarPlayBackgroundSession.isOwner(this)) return
         if (shuttingDown.get() || menuOpen || handshakeResetInProgress || controller != null) return
+        if (ZeekrProfile.active(this)) {
+            if (wirelessEnabled) usbP2pReleaseComplete = false
+            if (!wirelessEnabled && !usbP2pReleaseComplete) {
+                if (!usbP2pReleasePending) {
+                    usbP2pReleasePending = true
+                    setConnectionStage(R.string.zkr_wireless_stopping)
+                    ZeekrWirelessMode.disable(this) { result ->
+                        usbP2pReleasePending = false
+                        if (!isDestroyed && !shuttingDown.get()) {
+                            if (result == OwnedP2pRelease.Result.FAILED) {
+                                appendLog("USB startup paused: CarPlay Wi-Fi Direct release was not confirmed")
+                                setConnectionStage(R.string.zkr_wireless_off_failed)
+                            } else {
+                                usbP2pReleaseComplete = true
+                                maybeStartCarPlay()
+                            }
+                        }
+                    }
+                }
+                return
+            }
+        }
         val controllerGeneration = restartGeneration
         // Settings → Connection can change the target while this screen stays open (#696).
         mfiTarget = AirPlayPersistence.loadMfiTarget(this)

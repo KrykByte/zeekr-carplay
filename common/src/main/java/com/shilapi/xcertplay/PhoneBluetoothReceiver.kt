@@ -14,6 +14,7 @@ import android.util.Log
 class PhoneBluetoothReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != BluetoothDevice.ACTION_ACL_CONNECTED ||
+            ZeekrWirelessMode.disabled(context) || ZeekrWirelessMode.busy ||
             !DiPlayPreferences.connectOnPhoneBluetooth(context) ||
             CarPlayBackgroundSession.hasSession()) return
         val selected = DiPlayPreferences.phoneAddress(context) ?: return

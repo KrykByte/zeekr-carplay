@@ -19,6 +19,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
 import org.robolectric.Robolectric
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
@@ -37,10 +38,11 @@ class CarPlayHostClusterStartupTest {
     private val displays = mutableListOf<Int>()
 
     @Before fun setUp() {
-        activity = Robolectric.buildActivity(CarPlayHostActivity::class.java).get()
         // Prior UI tests may leave an ADB cluster route enabled in the reused sandbox.
-        // Every cluster scenario starts from the same routing preferences.
-        activity.getSharedPreferences("xcertplay_airplay", 0).edit().clear().commit()
+        // Reset before constructing the host, whose initializers can read routing/device state.
+        RuntimeEnvironment.getApplication().getSharedPreferences("xcertplay_airplay", 0).edit().clear().commit()
+        ShadowBuild.setFingerprint("robolectric")
+        activity = Robolectric.buildActivity(CarPlayHostActivity::class.java).get()
         AirPlayPersistence.saveClusterMapEnabled(activity, true)
         controller = mock(CarPlayController::class.java)
         sink = mock(AndroidMediaSink::class.java)
@@ -74,7 +76,9 @@ class CarPlayHostClusterStartupTest {
             assertTrue(windows.constructed().isEmpty())
 
             firstFrame()
-            assertEquals(1, windows.constructed().size)
+            assertEquals("fingerprint=${android.os.Build.FINGERPRINT}; " +
+                "route=${AdbClusterRouter.enabled(activity)}; ready=${invoke("clusterOutputReady")}; " +
+                "displays=${ClusterMapPresentation.describeDisplays(activity)}", 1, windows.constructed().size)
             verify(windows.constructed().single()).show()
             firstFrame()
             assertEquals(1, windows.constructed().size)

@@ -18,7 +18,7 @@ android {
         minSdk = 24
         targetSdk = 37
         resourceConfigurations += listOf("en", "ru")
-        versionCode = 45
+        versionCode = 46
         versionName = "Final Alpha 03"
 
     }

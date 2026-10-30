@@ -1,6 +1,7 @@
 package com.shilapi.xcertplay
 
 import android.content.Intent
+import android.os.Looper
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.Switch
 import com.shilapi.xcertplay.host.R
 import com.shilapi.xcertplay.orchestration.WirelessHotspotMode
 import java.io.File
+import java.time.Duration
 import org.junit.Assert.*
 import org.junit.After
 import org.junit.Before
@@ -19,6 +21,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
@@ -87,6 +90,37 @@ class ZeekrAlphaUiTest {
             assertTrue(aboutText.contains("shihabal3amri/DiPlay"))
             assertFalse(aboutText.contains(a.getString(R.string.update_check)))
             assertFalse(aboutText.contains(a.getString(R.string.settings_background_update_checks)))
+        } finally { controller.pause().stop().destroy() }
+    }
+
+    @Test fun homeCanDisableWirelessWithoutAnActiveSession() {
+        val controller = Robolectric.buildActivity(DiPlayActivity::class.java,
+            Intent(context, DiPlayActivity::class.java).putExtra("page", "home")).setup()
+        val a = controller.get()
+        try {
+            click(a, R.string.zkr_wireless_off)
+            shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(300))
+            assertTrue(ZeekrWirelessMode.disabled(a))
+            assertFalse(AirPlayPersistence.loadWirelessEnabled(a))
+            assertTrue(texts(a).any { it.text == a.getString(R.string.zkr_wireless_on) })
+            assertFalse(ZeekrWirelessMode.busy)
+        } finally { controller.pause().stop().destroy() }
+    }
+
+    @Test fun choosingUsbInTheGuideDisablesWirelessBeforeContinuing() {
+        val controller = Robolectric.buildActivity(DiPlayActivity::class.java,
+            Intent(context, DiPlayActivity::class.java).putExtra("page", "setup")).setup()
+        val a = controller.get()
+        try {
+            AirPlayPersistence.saveCarBluetoothAudio(a, true)
+            click(a, R.string.setup_next)
+            click(a, R.string.zkr_usb)
+            shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(300))
+            assertTrue(ZeekrWirelessMode.disabled(a))
+            assertFalse(AirPlayPersistence.loadWirelessEnabled(a))
+            assertEquals(DefaultConnectionMode.USB, DiPlayPreferences.defaultConnectionMode(a))
+            assertTrue(AirPlayPersistence.loadCarBluetoothAudio(a))
+            assertTrue(next(a).isEnabled)
         } finally { controller.pause().stop().destroy() }
     }
 
@@ -166,6 +200,24 @@ class ZeekrAlphaUiTest {
                     assertTrue(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it))
                 }
                 bitmap.recycle()
+                val home = LinearLayout(a).apply {
+                    orientation = LinearLayout.VERTICAL
+                    layoutDirection = quick.layoutDirection
+                    setBackgroundColor(0xff101827.toInt())
+                }
+                DiPlayActivity::class.java.getDeclaredMethod("home", LinearLayout::class.java)
+                    .apply { isAccessible = true }.invoke(a, home)
+                DiPlayActivity::class.java.getDeclaredMethod("normalizeSpacing", LinearLayout::class.java, Boolean::class.javaPrimitiveType)
+                    .apply { isAccessible = true }.invoke(a, home, false)
+                home.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+                home.layout(0, 0, width, home.measuredHeight)
+                val homeBitmap = Bitmap.createBitmap(width, home.measuredHeight, Bitmap.Config.ARGB_8888)
+                home.draw(Canvas(homeBitmap))
+                File(out, "$name-home.png").outputStream().use {
+                    assertTrue(homeBitmap.compress(Bitmap.CompressFormat.PNG, 100, it))
+                }
+                homeBitmap.recycle()
             } finally { controller.pause().stop().destroy() }
         }
     }

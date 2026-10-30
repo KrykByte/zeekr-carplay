@@ -199,6 +199,7 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
     private var homeLastProblem: TextView? = null
     private var connectButton: Button? = null
     private var disconnectButton: Button? = null
+    private var wirelessOffButton: Button? = null
     private var lastRunning: Boolean? = null
     private var pendingWireless = false
     private var bluetoothSettingsVisited = false
@@ -423,7 +424,7 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
                 initialLaunch = false
                 startCarHotspotOnLaunch()
             }
-            handler.post { connect(true) }
+            handler.post { connect(true, automatic = true) }
         }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -450,13 +451,14 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
                 initialLaunch = false
                 startCarHotspotOnLaunch()
             }
-            handler.post { connect(true) }
+            handler.post { connect(true, automatic = true) }
         }
     }
     private fun consumeBluetoothAutoConnectIntent(intent: Intent): Boolean {
         val requested = intent.getStringExtra(PhoneBluetoothReceiver.EXTRA_AUTO_CONNECT) == PhoneBluetoothReceiver.launchToken
         intent.removeExtra(PhoneBluetoothReceiver.EXTRA_AUTO_CONNECT)
         return requested && DiPlayPreferences.connectOnPhoneBluetooth(this) &&
+            !ZeekrWirelessMode.disabled(this) && !ZeekrWirelessMode.busy &&
             DiPlayPreferences.phoneAddress(this) != null && setupError == null &&
             !CarPlayBackgroundSession.hasSession()
     }
@@ -552,7 +554,7 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
             startCarHotspotOnLaunch()
             if (setupError == null && !CarPlayBackgroundSession.hasSession() &&
                 DiPlayPreferences.autoConnect(this) && requestedPage(intent) == null && page != "setup") {
-                handler.post { connect(DiPlayPreferences.autoConnectWireless(this)) }
+                handler.post { connect(DiPlayPreferences.autoConnectWireless(this), automatic = true) }
             }
         }
     }
@@ -945,7 +947,7 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
         status = label(getString(R.string.ready_when_you_are), 24, TEXT, true).apply { setPadding(0, dp(10), 0, dp(16)) }
         card.addView(status)
         connectButton = homeButton(getString(R.string.connect_phone), true) {
-            if (CarPlayBackgroundSession.hasSession()) openProjection()
+            if (CarPlayBackgroundSession.hasSession() && !ZeekrWirelessMode.disabled(this)) openProjection()
             else connect(true)
         }
         card.addView(connectButton, matchButton(height = if (compact) 54 else 68))
@@ -987,6 +989,13 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
             CarPlayBackgroundSession.stop { runOnUiThread { refreshStatus() } }
         }.apply { visibility = View.GONE }
         card.addView(disconnectButton, matchButton(if (compact) CONTROL_GAP_DP else 16, if (compact) 46 else 56))
+        if (ZeekrProfile.active(this)) {
+            wirelessOffButton = zeekrChoice(getString(R.string.zkr_wireless_off), false) {
+                disableWireless()
+            }
+            card.addView(wirelessOffButton, matchButton(CONTROL_GAP_DP, -2))
+            card.addView(label(getString(R.string.zkr_wireless_off_desc), 14, MUTED))
+        }
         val right = column().apply { gravity = Gravity.CENTER_HORIZONTAL }
         val logo = ImageView(this).apply {
             setImageResource(R.drawable.ic_carplay)
@@ -1807,7 +1816,12 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
                 getString(R.string.default_connection_wireless),
                 getString(R.string.default_connection_usb)
             ), connectionModes.indexOf(DiPlayPreferences.defaultConnectionMode(this)), reconnects = false) {
-                DiPlayPreferences.saveDefaultConnectionMode(this, connectionModes[it])
+                val selected = connectionModes[it]
+                if (ZeekrProfile.active(this) && selected == DefaultConnectionMode.USB) disableWireless()
+                else {
+                    if (ZeekrProfile.active(this) && selected == DefaultConnectionMode.WIRELESS) ZeekrWirelessMode.enable(this)
+                    DiPlayPreferences.saveDefaultConnectionMode(this, selected)
+                }
             }
             adbToggle(card, R.string.open_after_the_car_starts,
                 R.string.availability_depends_on_your_head_unit_s_startup_settings,
@@ -3372,6 +3386,13 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
                 val wireless = AirPlayPersistence.loadWirelessEnabled(this)
                 for ((enabled, title) in listOf(false to R.string.zkr_usb, true to R.string.zkr_wireless)) {
                     card.addView(zeekrChoice(getString(title), chosen && wireless == enabled) {
+                        if (ZeekrWirelessMode.busy) return@zeekrChoice
+                        if (!enabled) {
+                            ZeekrProfile.choose(this, "transport")
+                            disableWireless { render() }
+                            return@zeekrChoice
+                        }
+                        ZeekrWirelessMode.enable(this)
                         AirPlayPersistence.saveWirelessEnabled(this, enabled)
                         DiPlayPreferences.saveDefaultConnectionMode(this,
                             if (enabled) DefaultConnectionMode.WIRELESS else DefaultConnectionMode.USB)
@@ -3405,7 +3426,7 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
             setupStep++; render()
         }.apply {
             isEnabled = when (step) {
-                1 -> ZeekrProfile.connectionChosen(this@DiPlayActivity) && !pendingCarHotspotSetup
+                1 -> ZeekrProfile.connectionChosen(this@DiPlayActivity) && !pendingCarHotspotSetup && !ZeekrWirelessMode.busy
                 2 -> ZeekrProfile.chosen(this@DiPlayActivity, "audio")
                 else -> true
             }
@@ -5875,7 +5896,34 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
         parent.addView(space(12))
     }
 
-    private fun connect(wireless: Boolean) {
+    private fun disableWireless(completion: (Boolean) -> Unit = {}) {
+        startupHotspotCancelled = true
+        pendingWireless = false
+        ZeekrWirelessMode.disable(this) { result ->
+            if (!isFinishing && !isDestroyed) {
+                render()
+                toast(getString(when (result) {
+                    OwnedP2pRelease.Result.CLEAR -> R.string.zkr_wireless_off_done
+                    OwnedP2pRelease.Result.OTHER_APP -> R.string.zkr_wireless_other_app
+                    OwnedP2pRelease.Result.FAILED -> R.string.zkr_wireless_off_failed
+                }))
+                completion(result != OwnedP2pRelease.Result.FAILED)
+            }
+        }
+        render()
+    }
+
+    private fun connect(wireless: Boolean) = connect(wireless, usbReleased = false, automatic = false)
+
+    private fun connect(wireless: Boolean, usbReleased: Boolean = false, automatic: Boolean = false) {
+        if (ZeekrProfile.active(this)) {
+            if (ZeekrWirelessMode.busy) { toast(getString(R.string.zkr_wireless_stopping)); return }
+            if (wireless && automatic && ZeekrWirelessMode.disabled(this)) return
+            if (!wireless && !usbReleased) {
+                disableWireless { released -> if (released) connect(false, usbReleased = true, automatic = automatic) }
+                return
+            }
+        }
         startupHotspotCancelled = true
         if (wireless && pendingCarHotspotSetup) { toast(getString(R.string.save_your_hotspot_details_in_connection_setup_first)); page = "connection"; render(); return }
         if (setupError != null) { toast(setupError!!); return }
@@ -5899,6 +5947,7 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
             return
         }
         val open = {
+            if (wireless && ZeekrProfile.active(this)) ZeekrWirelessMode.enable(this)
             AirPlayPersistence.saveWirelessEnabled(this, wireless)
             openProjection()
         }
@@ -6012,11 +6061,13 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
         // A USB session shares this card's status and Disconnect, but not its wireless title or Wi-Fi hint (#742).
         val wired = HomeCardTransport.wired(running, AirPlayPersistence.loadWirelessEnabled(this))
         homeCardTitle?.text = getString(if (wired) R.string.home_usb_carplay else R.string.wireless_carplay)
-        homeConnectionHint?.visibility = if (wired) View.GONE else View.VISIBLE
+        homeConnectionHint?.visibility = if (wired || ZeekrWirelessMode.disabled(this)) View.GONE else View.VISIBLE
         status?.text = when {
+            ZeekrProfile.active(this) && ZeekrWirelessMode.busy -> getString(R.string.zkr_wireless_stopping)
             setupError != null -> getString(R.string.setup_needs_attention)
             CarPlayBackgroundSession.active -> getString(R.string.carplay_connected)
             running -> getString(R.string.connecting_to_your_iphone)
+            ZeekrWirelessMode.disabled(this) -> getString(R.string.zkr_wireless_off_status)
             DiPlayPreferences.phoneAddress(this) != null -> "${getString(R.string.status_ready_for_prefix)}${DiPlayPreferences.phoneName(this)}"
             else -> getString(R.string.ready_when_you_are)
         }
@@ -6032,6 +6083,12 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
             lastRunning = running
         }
         connectButton?.isEnabled = setupError == null
+        if (ZeekrProfile.active(this)) {
+            wirelessOffButton?.isEnabled = !ZeekrWirelessMode.busy
+            connectButton?.isEnabled = setupError == null && !ZeekrWirelessMode.busy
+            if (ZeekrWirelessMode.disabled(this)) connectButton?.text = getString(R.string.zkr_wireless_on)
+            disconnectButton?.visibility = if (running && wired) View.VISIBLE else View.GONE
+        }
         refreshReconnectBar()
         refreshReadiness()
     }

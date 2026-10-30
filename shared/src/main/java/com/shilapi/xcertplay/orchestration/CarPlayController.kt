@@ -490,6 +490,7 @@ class CarPlayController(
     }
 
     fun isClosed(): Boolean = closed
+    val transport: CarPlayTransport get() = config.transport
 
     /** Nonblocking identity for wheel controls: only an unclosed phone with an accepted primary stream. */
     fun activeAirPlaySessionToken(): Any? {

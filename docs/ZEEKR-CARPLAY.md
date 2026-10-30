@@ -1,6 +1,8 @@
 # Zeekr CarPlay — Final Alpha 03
 
-Package `com.openzeekr.carplay`, version code 45. Update an existing installation with this package in place to preserve settings.
+Package `com.openzeekr.carplay`, version code 46. Update an existing installation with this package in place to preserve settings.
+
+Wireless pause on Home stops only a wireless session, waits for the existing receiver teardown callback, and checks the active P2P group against the exact SSID recorded in `carplay_wifi_p2p/owned_ssid`. A successful removal callback is followed by polling until the group disappears. Missing callbacks, removal errors and unconfirmed disappearance report failure. Session-stop waiting is also bounded; a late stop callback cannot remove groups after the operation timed out. A foreign/replacement group is preserved. A saved pause flag blocks Bluetooth-triggered and queued automatic wireless launches until manual enable. USB selection and wired-host startup use the same cleanup, including USB attachment intents. Global Wi-Fi/Bluetooth switches, unrelated groups and saved pairing records are not reset. Firmware acceptance requires a vehicle test.
 
 See [README](../README.md) / [English](../README.en.md) for installation, tested configuration, fullscreen controls and screenshots. Source base: DiPlay commit `615b32ce0b40cd0b99ce94ba23a512001553684f`.
 

@@ -2,7 +2,7 @@
   <string name="zkr_welcome">Zeekr CarPlay</string>
   <string name="zkr_welcome_desc">Final Alpha 03 · Independent community build. Choose your language, connection and audio.</string>
   <string name="zkr_transport">Choose a connection</string>
-  <string name="zkr_transport_desc">Use a USB data cable, or choose one of the three wireless modes below.</string>
+  <string name="zkr_transport_desc">Use a USB data cable, or choose one of the three wireless modes below. Selecting USB ends wireless CarPlay and releases its Wi-Fi Direct group.</string>
   <string name="zkr_usb">USB cable</string>
   <string name="zkr_wireless">Wireless</string>
   <string name="zkr_hotspot">Car hotspot (experimental)</string>
@@ -25,4 +25,12 @@
   <string name="zkr_contact">Contact and project</string>
   <string name="zkr_telegram">Telegram · @AibatK</string>
   <string name="zkr_project_github">GitHub · Zeekr CarPlay source</string>
+  <string name="zkr_wireless_off">Turn off wireless CarPlay</string>
+  <string name="zkr_wireless_on">Turn on wireless CarPlay</string>
+  <string name="zkr_wireless_off_desc">Ends wireless CarPlay and releases its Wi-Fi Direct group. The car Wi-Fi and Bluetooth switches stay on. Start wireless CarPlay manually when you need it again.</string>
+  <string name="zkr_wireless_off_done">Wireless CarPlay is off. Its Wi-Fi Direct group has been released.</string>
+  <string name="zkr_wireless_other_app">Wireless CarPlay is off. Another application owns Wi-Fi Direct; its connection was left unchanged.</string>
+  <string name="zkr_wireless_off_failed">Wireless auto-start is off, but Wi-Fi Direct release was not confirmed. Try turning wireless CarPlay off again.</string>
+  <string name="zkr_wireless_off_status">Wireless CarPlay is off. USB is available.</string>
+  <string name="zkr_wireless_stopping">Stopping wireless CarPlay...</string>
 </resources>

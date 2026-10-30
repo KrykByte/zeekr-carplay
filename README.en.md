@@ -25,6 +25,16 @@ I am sharing this as an open-source project. Download the APK and source, study 
 
 I can only test the app on my own Zeekr, so I cannot confirm compatibility with other cars. I hope the project is useful to you as a working solution or a starting point for your own improvements.
 
+## Turn off wireless CarPlay
+
+On the home screen, tap **Turn off wireless CarPlay**. The app ends its wireless session and requests removal of its own Wi-Fi Direct group. It reports success only after verifying removal; if cleanup fails, it shows an error and you can retry.
+
+Automatic wireless startup stays off until you manually enable it again using **Turn on wireless CarPlay**. Selecting USB in the guide, tapping **Connect with USB**, or starting through a USB attachment also releases the app's group before wired startup. Turning off wireless does not stop an existing wired session.
+
+The global Wi-Fi and Bluetooth switches stay on. The factory hotspot and other apps' connections, including ZeekrTV, are left alone. This provides a temporary way to release CarPlay resources before transferring files; it does not establish or fix the cause of ZeekrTV-related lag. Vehicle verification is still needed.
+
+![Wireless CarPlay control](docs/screenshots/home-en.png)
+
 ## Factory bars and fullscreen mode
 
 Choose whether to keep the factory interface visible:
@@ -56,7 +66,7 @@ Application screens captured on an Android emulator. They do not show Zeekr's pr
 
 Documentation: [build instructions](docs/BUILD.md), [Zeekr CarPlay](docs/ZEEKR-CARPLAY.md), [original DiPlay README](docs/DIPLAY-README.md), [xcertplay README](docs/UPSTREAM-README.md).
 
-Validation: **3,543 tests passed, one skipped**; required lint and application builds succeeded. Source builds contain no CarPlay runtime certificate/key by default and need separately provisioned runtime inputs for standalone authentication. Those inputs are stored in a separate release attachment. The Android APK-signing key is not uploaded.
+Validation: **3,557 tests passed, one skipped**; required lint and application builds succeeded. Source builds contain no CarPlay runtime certificate/key by default and need separately provisioned runtime inputs for standalone authentication. Those inputs are stored in a separate release attachment. The Android APK-signing key is not uploaded.
 
 ## Licenses
 

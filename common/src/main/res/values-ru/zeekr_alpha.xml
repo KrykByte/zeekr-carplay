@@ -2,7 +2,7 @@
   <string name="zkr_welcome">Zeekr CarPlay</string>
   <string name="zkr_welcome_desc">Final Alpha 03 · Независимая сборка сообщества. Выберите язык, подключение и звук.</string>
   <string name="zkr_transport">Выберите подключение</string>
-  <string name="zkr_transport_desc">Используйте USB-кабель данных или выберите один из трёх беспроводных режимов ниже.</string>
+  <string name="zkr_transport_desc">Используйте USB-кабель данных или выберите один из трёх беспроводных режимов ниже. Выбор USB завершает беспроводной CarPlay и освобождает его Wi-Fi Direct.</string>
   <string name="zkr_usb">По USB-кабелю</string>
   <string name="zkr_wireless">Без проводов</string>
   <string name="zkr_hotspot">Точка доступа автомобиля (экспериментально)</string>
@@ -25,4 +25,12 @@
   <string name="zkr_contact">Связь и проект</string>
   <string name="zkr_telegram">Telegram · @AibatK</string>
   <string name="zkr_project_github">GitHub · Исходники Zeekr CarPlay</string>
+  <string name="zkr_wireless_off">Отключить беспроводной CarPlay</string>
+  <string name="zkr_wireless_on">Включить беспроводной CarPlay</string>
+  <string name="zkr_wireless_off_desc">Завершает беспроводной CarPlay и освобождает его Wi-Fi Direct. Wi-Fi автомобиля и Bluetooth остаются включёнными. Когда понадобится, включите беспроводной CarPlay вручную.</string>
+  <string name="zkr_wireless_off_done">Беспроводной CarPlay отключён. Его Wi-Fi Direct освобождён.</string>
+  <string name="zkr_wireless_other_app">Беспроводной CarPlay отключён. Wi-Fi Direct другого приложения оставлен без изменений.</string>
+  <string name="zkr_wireless_off_failed">Автозапуск беспроводного CarPlay отключён, но освобождение Wi-Fi Direct не подтверждено. Повторите отключение.</string>
+  <string name="zkr_wireless_off_status">Беспроводной CarPlay отключён. USB доступен.</string>
+  <string name="zkr_wireless_stopping">Отключение беспроводного CarPlay…</string>
 </resources>
