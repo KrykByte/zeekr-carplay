@@ -2,7 +2,7 @@
 
 [Русский](README.md) · **English**
 
-A CarPlay receiver for the Zeekr Android head unit. An open-source project. Current version: **Final Alpha 03**, package `com.openzeekr.carplay`.
+I adapted DiPlay for my Zeekr and shared the application with its source code. Current version: **Final Alpha 03**, package `com.openzeekr.carplay`.
 
 ## Download and install
 
@@ -17,13 +17,13 @@ The APK is sufficient for installation; no separate certificate/key import is ne
 
 ## Compatibility
 
-Owner-tested on a **Chinese pre-facelift Zeekr 001, model year 2023, Zeekr OS 5.6 / Android 9**. The owner confirmed Wi-Fi Direct with factory Bluetooth audio, steering-wheel track controls and reconnection after a head-unit restart.
+I tested the application on my **Chinese pre-facelift Zeekr 001, model year 2023, Zeekr OS 5.6 / Android 9**. Wi-Fi Direct with factory Bluetooth audio, steering-wheel track controls and reconnection after a head-unit restart work reliably on my car.
 
-**Compatibility with other models, model years and firmware versions is unknown.** Calls, Siri and navigation prompts require separate testing. Each new build/device configuration also requires validation on the car.
+**I have not tested other vehicles or firmware versions and do not know how the app will work on them.** I have not separately verified calls, Siri or navigation prompts. New builds and configurations also need vehicle testing.
 
-You may download the APK and source, study the code, modify the application and develop your own versions under the component licenses. Participants test compatibility with other vehicles and implement improvements independently.
+I am sharing this as an open-source project. Download the APK and source, study the code, modify it and improve it for your own car. Keep the upstream credits and follow the component licenses. If you want to support another vehicle, please test and adapt the app independently.
 
-**The maintainer cannot test other vehicles and does not provide individual support. Please do not send the maintainer logs, builds or requests to test other cars.**
+**I cannot test other cars or provide individual support. Please do not send me logs, builds or requests to test or adapt the app for another vehicle.**
 
 ## Factory bars and fullscreen mode
 
@@ -64,4 +64,4 @@ Validation: **3,543 tests passed, one skipped**; required lint and application b
 
 Independent community software, not an official Zeekr or Apple product.
 
-Adaptation maintainer: **[Telegram @AibatK](https://t.me/AibatK)**.
+My Telegram: **[@AibatK](https://t.me/AibatK)**.
