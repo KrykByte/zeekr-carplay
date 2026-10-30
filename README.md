@@ -10,6 +10,10 @@ The owner reported stable operation using **Wi-Fi Direct + factory Bluetooth aud
 
 Владелец проверил китайский Zeekr 001 дорестайлинг 2023, OS 5.6 / Android 9. Рекомендуемая проверенная конфигурация: **Wi-Fi Direct и звук через штатный Bluetooth**. Точка доступа автомобиля остаётся экспериментальной. Интеграция навигации с приборной панелью не заявлена; звонки, Siri и навигационные подсказки требуют отдельной проверки.
 
+**На других моделях автомобилей, годах выпуска и версиях прошивки приложение не проверялось. Как оно будет работать на них — неизвестно.** Если хотите, изучайте исходники, тестируйте на своей машине и предлагайте улучшения. В сообщении о результате указывайте модель, год, версию прошивки/Android, iPhone/iOS и выбранные режимы подключения и звука. Перед отправкой логов удаляйте личные данные. Репозиторий пока приватный; участие доступно приглашённым пользователям.
+
+**Other models, model years and firmware versions have not been tested; compatibility is unknown.** Community testing, issue reports and improvements are welcome. Include your vehicle/year, firmware/Android, iPhone/iOS and connection/audio modes. Remove personal information from logs before sharing. While the repository is private, participation requires an invitation.
+
 Contact: [Telegram @AibatK](https://t.me/AibatK).
 
 ## Changes
