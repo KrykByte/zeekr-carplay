@@ -23,7 +23,7 @@ I tested the application on my **Chinese pre-facelift Zeekr 001, model year 2023
 
 I am sharing this as an open-source project. Download the APK and source, study the code, modify it and improve it for your own car. Keep the upstream credits and follow the component licenses. If you want to support another vehicle, please test and adapt the app independently.
 
-**I cannot test other cars or provide individual support. Please do not send me logs, builds or requests to test or adapt the app for another vehicle.**
+I can only test the app on my own Zeekr, so I cannot confirm compatibility with other cars. I hope the project is useful to you as a working solution or a starting point for your own improvements.
 
 ## Factory bars and fullscreen mode
 
