@@ -57,6 +57,6 @@ The maneuver PNGs under `shared/src/main/assets/byd-hud-icons` were imported fro
 
 ## Zeekr community fork branding
 
-The Final Alpha 01 fork uses the Zeekr logo for its target-vehicle icon. SVG source: https://upload.wikimedia.org/wikipedia/commons/1/1e/Zeekr_logo.svg (Zeekr; file description https://commons.wikimedia.org/wiki/File:Zeekr_logo.svg). The composed icon source is in docs/assets. This is independent community software and does not imply endorsement by Zeekr or Apple. Original DiPlay, xcertplay, DiAuto and component notices above remain applicable.
+The fork uses the upstream CarPlay launcher artwork and the owner's supplied Zeekr emblem PNG for the OEM return button in CarPlay (`docs/assets/zeekr-carplay-user-logo.png`). Additional SVG compositions are retained in docs/assets; their Zeekr SVG source is https://upload.wikimedia.org/wikipedia/commons/1/1e/Zeekr_logo.svg (Zeekr; file description https://commons.wikimedia.org/wiki/File:Zeekr_logo.svg).
 
-Final Alpha 02 restores the upstream CarPlay launcher artwork and uses the owner's supplied Zeekr emblem PNG only for the OEM return button in CarPlay (`docs/assets/zeekr-carplay-user-logo.png`). The older SVG compositions remain in the source as historical assets. Trademarks are not relicensed by the project code license.
+This is independent community software and does not imply endorsement by Zeekr or Apple. Original DiPlay, xcertplay, DiAuto and component notices above remain applicable. Trademarks are not relicensed by the project code license.

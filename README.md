@@ -1,49 +1,65 @@
 # Zeekr CarPlay
 
-Independent community adaptation of DiPlay for the Chinese pre-facelift **Zeekr 001 (2023), Zeekr OS 5.6 / Android 9**. Current version: **Final Alpha 03**, Android package `com.openzeekr.carplay`.
+**Русский** · [English](README.en.md)
 
-This repository starts with the source snapshot based on the owner's tested Alpha 02, with contact/project links added in Alpha 03. It is intended to remain private while distribution questions are reviewed. It is not an official Zeekr or Apple product.
+CarPlay для Android-магнитолы Zeekr. Актуальная версия — **Final Alpha 03**, пакет `com.openzeekr.carplay`.
 
-## Working configuration / Проверенная конфигурация
+## Скачать и установить
 
-The owner reported stable operation using **Wi-Fi Direct + factory Bluetooth audio**, including steering-wheel track controls and reconnection after a head-unit restart. After Alpha 02, the owner reported that the interface fixes also worked without problems. These are owner reports for this configuration, not certification of other cars, firmware versions or all CarPlay functions.
+**[Скачать APK — Final Alpha 03](https://github.com/KrykByte/zeekr-carplay/releases/download/final-alpha-03/OpenZeekr-CarPlay-Final-Alpha-03.apk)** · [Релиз и исходники](https://github.com/KrykByte/zeekr-carplay/releases/tag/final-alpha-03)
 
-Владелец проверил китайский Zeekr 001 дорестайлинг 2023, OS 5.6 / Android 9. Рекомендуемая проверенная конфигурация: **Wi-Fi Direct и звук через штатный Bluetooth**. Точка доступа автомобиля остаётся экспериментальной. Интеграция навигации с приборной панелью не заявлена; звонки, Siri и навигационные подсказки требуют отдельной проверки.
+1. Скачайте `OpenZeekr-CarPlay-Final-Alpha-03.apk` и установите на головное устройство автомобиля.
+2. Если приложение с пакетом `com.openzeekr.carplay` уже установлено, обновите его поверх — настройки сохранятся.
+3. Выберите русский или английский язык и пройдите мастер настройки.
+4. Для проверенного автомобиля выберите **беспроводное подключение → Wi-Fi Direct**, затем **звук через Bluetooth автомобиля**. Оставьте iPhone сопряжённым со штатным Bluetooth и выберите Bluetooth-музыку в автомобиле.
 
-**На других моделях автомобилей, годах выпуска и версиях прошивки приложение не проверялось. Как оно будет работать на них — неизвестно.** Если хотите, изучайте исходники, тестируйте на своей машине и предлагайте улучшения. В сообщении о результате указывайте модель, год, версию прошивки/Android, iPhone/iOS и выбранные режимы подключения и звука. Перед отправкой логов удаляйте личные данные. Репозиторий пока приватный; участие доступно приглашённым пользователям.
+Для установки достаточно APK: отдельно импортировать сертификаты и ключи не нужно. Репозиторий пока приватный — скачивание доступно владельцу и приглашённым пользователям после входа в GitHub.
 
-**Other models, model years and firmware versions have not been tested; compatibility is unknown.** Community testing, issue reports and improvements are welcome. Include your vehicle/year, firmware/Android, iPhone/iOS and connection/audio modes. Remove personal information from logs before sharing. While the repository is private, participation requires an invitation.
+## Совместимость
 
-Contact: [Telegram @AibatK](https://t.me/AibatK).
+Проверено владельцем на **китайском Zeekr 001, 2023 год, дорестайлинг, Zeekr OS 5.6 / Android 9**. Подтверждены Wi-Fi Direct со штатным Bluetooth-звуком, переключение музыки с руля и восстановление подключения после перезагрузки головного устройства.
 
-## Changes
+**На других моделях, годах выпуска и прошивках работа неизвестна.** Звонки, Siri и навигационные подсказки требуют отдельной проверки. Каждая новая сборка/конфигурация также требует проверки на автомобиле.
 
-- Russian/English setup guide with explicit connection and audio choices.
-- Wi-Fi Direct recommendation limited to the tested vehicle configuration.
-- Bluetooth audio recommendation, retaining experimental status.
-- Simplified settings; unsupported BYD controls hidden while implementations remain in source.
-- Correct launcher name, separate CarPlay application icon and Zeekr return-button image.
-- Quick access to system-bar visibility and bar contrast following the Android system theme.
-- Upstream automatic update checks disabled.
+Кому интересно — изучайте исходники, тестируйте и предлагайте улучшения. В Issues указывайте модель/год автомобиля, прошивку/Android, iPhone/iOS, режим подключения и звука. Удаляйте личные данные из логов перед отправкой. Пока проект приватный, для участия требуется приглашение.
 
-Details: [Alpha 01](docs/ZEEKR-ALPHA-01.md), [Alpha 02](docs/ZEEKR-ALPHA-02.md), [Alpha 03](docs/ZEEKR-ALPHA-03.md).
+## Системные панели и полноэкранный режим
 
-## Upstream and credits
+Видимость штатного интерфейса можно менять по желанию:
 
-- [DiPlay by shihabal3amri](https://github.com/shihabal3amri/DiPlay), source base: `615b32ce0b40cd0b99ce94ba23a512001553684f` (0.2.22).
-- [xcertplay by shilapi](https://github.com/shilapi/xcertplay), the underlying receiver.
-- [DiAuto](https://github.com/shihabal3amri/DiAuto), credited for adapted UI.
+1. Откройте приложение → **Настройки → Обзор → Быстрые настройки**.
+2. **«Скрыть панель состояния» выключено** — верхняя штатная панель видна. Включено — приложение запрашивает её скрытие.
+3. **«Скрыть панель навигации» выключено** — штатная панель навигации видна. Включено — приложение запрашивает её скрытие.
+4. Для полноэкранного режима включите оба переключателя. Чтобы вернуть панели, выключите их. Те же настройки есть в разделе **«Экран»**.
 
-The original DiPlay README is retained in [docs/DIPLAY-README.md](docs/DIPLAY-README.md); xcertplay documentation is in [docs/UPSTREAM-README.md](docs/UPSTREAM-README.md). Original authorship and component notices remain intact. No code from the protected paid APK was added.
+Изменения применяются сразу. Возможность скрыть панель зависит от прошивки; климатическая панель может оставаться видимой. На новой установке скрытие выключено. Из CarPlay настройки приложения открываются жестом вниз тремя пальцами, если этот жест выбран в настройках.
 
-## Build and verification
+## Скриншоты
 
-See [BUILD.md](docs/BUILD.md). Source-only builds contain **no CarPlay accessory certificate or private key**. A source-only APK therefore does not reproduce standalone authentication without separately provisioned runtime inputs. Ready-to-install APKs are provided in private [Releases](https://github.com/KrykByte/zeekr-carplay/releases), outside Git history. The owner also requested a separate private release archive of the existing CarPlay runtime files. The Android APK-signing key is not uploaded.
+Снимки приложения в Android-эмуляторе. Они не показывают фирменные панели Zeekr и не подтверждают подключение iPhone в эмуляторе.
 
-Alpha 02 validation completed: **3,543 tests passed, one skipped**, required lint and application builds succeeded. Tests cover Android 9 system-bar contrast and large-font UI; the owner's later report confirms successful operation on the target car.
+| Подключение | Звук |
+| --- | --- |
+| ![Подключение](docs/screenshots/connection-ru.png) | ![Звук](docs/screenshots/audio-ru.png) |
 
-Runtime credentials and APKs are excluded from Git history and stored only as private release attachments when explicitly requested by the owner. APK signing keys, local logs, diagnostic attachments and local toolchains are excluded from all uploads. The upstream Pages workflow is retained as documentation rather than an active workflow, so pushing this repository does not deploy its download site.
+| Быстрые настройки | О программе |
+| --- | --- |
+| ![Системные панели](docs/screenshots/settings-ru.png) | ![О программе](docs/screenshots/about-ru.png) |
 
-## Licenses and distribution
+## Исходники и авторы
 
-Retain [LICENSE](LICENSE), [THIRD_PARTY_NOTICES.md](docs/THIRD_PARTY_NOTICES.md) and component notices. The receiver uses GPL-3.0; adapted UI carries AGPL-3.0 terms. Some images and other assets have separate terms; code licenses do not grant rights to trademarks or every runtime asset. Public binary distribution remains subject to review of those components and authentication inputs.
+- [DiPlay — shihabal3amri](https://github.com/shihabal3amri/DiPlay), исходная база `615b32ce0b40cd0b99ce94ba23a512001553684f` (0.2.22).
+- [xcertplay — shilapi](https://github.com/shilapi/xcertplay), основа приёмника.
+- [DiAuto](https://github.com/shihabal3amri/DiAuto), источник адаптированных элементов интерфейса.
+
+Документация: [сборка](docs/BUILD.md), [Zeekr CarPlay](docs/ZEEKR-CARPLAY.md), [оригинальный README DiPlay](docs/DIPLAY-README.md), [README xcertplay](docs/UPSTREAM-README.md).
+
+Проверки: **3543 теста успешно, один пропущен**, lint и обязательные сборки завершились успешно. Исходники по умолчанию не содержат runtime-сертификатов и ключей CarPlay. Для самостоятельной полноценной сборки нужны отдельно подготовленные runtime-данные; владелец сохранил их отдельным вложением к приватному релизу. Ключ подписи Android не загружается.
+
+## Лицензии
+
+Сохранены [LICENSE](LICENSE), [уведомления о компонентах](docs/THIRD_PARTY_NOTICES.md) и исходное авторство. Приёмник — GPL-3.0, адаптированный интерфейс — AGPL-3.0. У отдельных изображений и компонентов свои условия; лицензия кода не предоставляет автоматически права на товарные знаки и runtime-данные.
+
+Независимый проект сообщества, не официальный продукт Zeekr или Apple.
+
+Обратная связь: **[Telegram @AibatK](https://t.me/AibatK)**.
