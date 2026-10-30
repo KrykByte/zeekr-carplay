@@ -2,7 +2,7 @@
 
 [Русский](README.md) · **English**
 
-A CarPlay receiver for the Zeekr Android head unit. Current version: **Final Alpha 03**, package `com.openzeekr.carplay`.
+A CarPlay receiver for the Zeekr Android head unit. An open-source project. Current version: **Final Alpha 03**, package `com.openzeekr.carplay`.
 
 ## Download and install
 
@@ -13,7 +13,7 @@ A CarPlay receiver for the Zeekr Android head unit. Current version: **Final Alp
 3. Choose Russian or English and complete the setup guide.
 4. For the tested vehicle, select **Wireless → Wi-Fi Direct**, then **Car Bluetooth audio**. Keep the iPhone paired with the factory Bluetooth system and select Bluetooth music in the car.
 
-The APK is sufficient for installation; no separate certificate/key import is needed. This repository is currently private: downloads require a signed-in owner or invited user.
+The APK is sufficient for installation; no separate certificate/key import is needed.
 
 ## Compatibility
 
@@ -21,7 +21,9 @@ Owner-tested on a **Chinese pre-facelift Zeekr 001, model year 2023, Zeekr OS 5.
 
 **Compatibility with other models, model years and firmware versions is unknown.** Calls, Siri and navigation prompts require separate testing. Each new build/device configuration also requires validation on the car.
 
-Source review, testing and improvements are welcome. Include vehicle/year, firmware/Android, iPhone/iOS, connection and audio modes in Issues. Remove personal information from logs before sharing. Participation requires an invitation while the project is private.
+You may download the APK and source, study the code, modify the application and develop your own versions under the component licenses. Participants test compatibility with other vehicles and implement improvements independently.
+
+**The maintainer cannot test other vehicles and does not provide individual support. Please do not send the maintainer logs, builds or requests to test other cars.**
 
 ## Factory bars and fullscreen mode
 
@@ -54,7 +56,7 @@ Application screens captured on an Android emulator. They do not show Zeekr's pr
 
 Documentation: [build instructions](docs/BUILD.md), [Zeekr CarPlay](docs/ZEEKR-CARPLAY.md), [original DiPlay README](docs/DIPLAY-README.md), [xcertplay README](docs/UPSTREAM-README.md).
 
-Validation: **3,543 tests passed, one skipped**; required lint and application builds succeeded. Source builds contain no CarPlay runtime certificate/key by default and need separately provisioned runtime inputs for standalone authentication. The owner stored those inputs in a separate private release attachment. The Android APK-signing key is not uploaded.
+Validation: **3,543 tests passed, one skipped**; required lint and application builds succeeded. Source builds contain no CarPlay runtime certificate/key by default and need separately provisioned runtime inputs for standalone authentication. Those inputs are stored in a separate release attachment. The Android APK-signing key is not uploaded.
 
 ## Licenses
 
@@ -62,4 +64,4 @@ Validation: **3,543 tests passed, one skipped**; required lint and application b
 
 Independent community software, not an official Zeekr or Apple product.
 
-Contact: **[Telegram @AibatK](https://t.me/AibatK)**.
+Adaptation maintainer: **[Telegram @AibatK](https://t.me/AibatK)**.

@@ -2548,7 +2548,6 @@ class DiPlayActivity : ComponentActivity(), AppAppearanceOwner {
             card.addView(button(getString(R.string.zkr_project_github), false) {
                 openSystem(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/KrykByte/zeekr-carplay")))
             }, matchButton(12, 60))
-            card.addView(label(getString(R.string.zkr_project_github_hint), 14, MUTED))
         }
     }
 

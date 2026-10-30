@@ -25,5 +25,4 @@
   <string name="zkr_contact">Связь и проект</string>
   <string name="zkr_telegram">Telegram · @AibatK</string>
   <string name="zkr_project_github">GitHub · Исходники Zeekr CarPlay</string>
-  <string name="zkr_project_github_hint">Пока репозиторий приватный: для просмотра нужно приглашение владельца.</string>
 </resources>
